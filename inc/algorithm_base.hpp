@@ -358,11 +358,10 @@ protected:
         std::uint64_t comparison{}, assignment{};
         time_vec.reserve(m_test_count);
         for (std::int64_t i{}; i < m_test_count; ++i){
-            static std::vector<NumType> temp(begin(m_vec), end(m_vec));
+            std::vector<NumType> temp(begin(m_vec), end(m_vec));
             auto start = std::chrono::steady_clock::now();
             algorithm(temp, m_input_size, comparison, assignment);
             auto end = std::chrono::steady_clock::now();
-            temp.clear();
             us time_interval{std::chrono::duration_cast<us>(end - start)};
             time_vec.push_back(time_interval.count());
         }
