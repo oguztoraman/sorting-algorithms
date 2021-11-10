@@ -35,9 +35,9 @@ struct is_char_helper<unsigned char>
 
 template<typename T>
 struct is_char
-        : public is_char_helper<std::remove_cv_t<T>>::type { };
+        : public is_char_helper<std::remove_cv_t<T>> { };
 
-template <typename T >
+template <typename T>
 inline constexpr bool is_char_v = is_char<T>::value;
 
 } //namespace

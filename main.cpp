@@ -7,8 +7,8 @@ using T = int;
 
 using namespace project;
 
-const auto default_test_number{
-    std::to_string(sorting_algorithms<T>::default_test_number)
+const auto default_test_count{
+    std::to_string(sorting_algorithms<T>::default_test_count)
 };
 
 const auto default_input_size{
@@ -21,15 +21,15 @@ const auto help_message{
     "usage;\n"
     "sorting-algorithms\n"
     "\tcompare sorting algorithms with " + default_input_size +
-    " random numbers " + default_test_number + " times\n\n"
+    " random numbers " + default_test_count + " times\n\n"
     "sorting-algorithms -h/--help\n"
     "\tprint this help message\n\n"
     "sorting-algorithms <input_size>\n"
     "\tcompare sorting algorithms with "
-    "<input_size> random numbers " + default_test_number + " times\n\n"
+    "<input_size> random numbers " + default_test_count + " times\n\n"
     "sorting-algorithms <input_file>\n"
     "\tcompare sorting algorithms with "
-    "reading numbers from <input_file> " + default_test_number + " times\n\n"
+    "reading numbers from <input_file> " + default_test_count + " times\n\n"
     "sorting-algorithms <input_size> <test_number>\n"
     "\tcompare sorting algorithms sort with "
     "<input_size> random numbers <test_number> times\n\n"

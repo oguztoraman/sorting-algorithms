@@ -14,8 +14,10 @@ struct center {
     {
         if constexpr (std::is_same_v<T, std::string>){
             m_str = std::move(str);
-        } else {
+        } else if constexpr(std::is_arithmetic_v<T>){
             m_str = std::to_string(str);
+        } else {
+            m_str = std::string{str};
         }
     }
     int m_width;
