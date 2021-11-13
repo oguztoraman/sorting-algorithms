@@ -48,7 +48,7 @@ public:
 protected:
 
     algorithm_base()
-        : algorithm_base(default_input_size, default_test_count) {}
+        : algorithm_base(default_input_size, default_test_count) { }
 
     template <typename InIter> requires std::input_iterator<InIter>
     algorithm_base(std::enable_if_t<!std::is_integral_v<InIter>, InIter> beg,
@@ -313,10 +313,11 @@ protected:
         void(std::vector<NumType>&, const std::int64_t&,
              std::uint64_t&, std::uint64_t&);
 
-    template <typename NameTable, typename FunctionTable>
+    template <typename Name, typename Function>
     [[nodiscard]] std::string
         compare(const std::bitset<AlgorithmCount>& algorithm_select,
-                NameTable algorithm_names, FunctionTable functions) const
+                Name (&algorithm_names)[AlgorithmCount],
+                Function (&functions)[AlgorithmCount]) const
     {
         std::ostringstream oss;
         oss << table_title();

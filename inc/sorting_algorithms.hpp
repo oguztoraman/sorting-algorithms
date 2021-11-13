@@ -6,7 +6,7 @@
 namespace project {
 
 struct sorting_algorithm_count
-        : public algorithm_count<6> {};
+        : public algorithm_count<6> { };
 
 template <typename NumType = int>
 class sorting_algorithms
