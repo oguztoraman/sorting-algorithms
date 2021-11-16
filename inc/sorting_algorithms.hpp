@@ -11,9 +11,7 @@ struct sorting_algorithm_count
 template <typename NumType = int>
 class sorting_algorithms
         : public algorithm_base<NumType, sorting_algorithm_count{}> {
-
 public:
-
     enum algorithms {
         selection = 1L << 0,
         bubble 	  = 1L << 1,
@@ -53,7 +51,6 @@ public:
     }
 
 private:
-
     constexpr static const char* algorithm_names[] = {
         "selection", "bubble", "quick", "merge", "insertion", "heap"
     };
