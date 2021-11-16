@@ -32,9 +32,7 @@ struct algorithm_count {
 
 template <typename NumType, std::size_t AlgorithmCount>
 class algorithm_base {
-
 public:
-
     static constexpr std::int64_t default_file_count = 5;
     static constexpr std::int64_t default_test_count = 21;
     static constexpr std::int64_t default_input_size  = 5'000;
@@ -46,7 +44,6 @@ public:
     );
 
 protected:
-
     algorithm_base()
         : algorithm_base(default_input_size, default_test_count) { }
 
@@ -91,7 +88,6 @@ protected:
     }
 
 public:
-
     std::int64_t get_test_count() const noexcept
     {
         return m_test_count;
@@ -198,7 +194,6 @@ public:
     }
 
 protected:
-
     std::vector<NumType> m_vec;
     std::int64_t m_test_count{};
     std::int64_t m_input_size{};
@@ -316,8 +311,8 @@ protected:
     template <typename Name, typename Function>
     [[nodiscard]] std::string
         compare(const std::bitset<AlgorithmCount>& algorithm_select,
-                Name (&algorithm_names)[AlgorithmCount],
-                Function (&functions)[AlgorithmCount]) const
+                const Name (&algorithm_names)[AlgorithmCount],
+                const Function (&functions)[AlgorithmCount]) const
     {
         std::ostringstream oss;
         oss << table_title();
@@ -335,7 +330,7 @@ protected:
             const std::string& name,
             const std::function<algorithmSignature>& algorithm) const
     {
-        auto [comparison, assignment, median_time, avg_time] = perform_test(algorithm);
+        const auto& [comparison,assignment,median_time,avg_time]=perform_test(algorithm);
         std::ostringstream oss;
         oss << table_horizontal_line('|');
         oss << "|" << table_column(name                  , 0, format::center)
