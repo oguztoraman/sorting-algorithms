@@ -14,7 +14,7 @@ int main(int argc, char *argv[])
         default: throw std::runtime_error{help_message};
         }
         if (compare){
-            std::cout << algorithms.compare(sorting_algorithms<T>::all);
+            std::cout << algorithms.compare();
         }
     } catch (const std::exception& e) {
         std::cerr << e.what() << "\n";
