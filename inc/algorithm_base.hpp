@@ -31,7 +31,7 @@ struct algorithm_count {
 };
 
 template <typename NumType, std::size_t AlgorithmCount>
-class algorithm_base  {
+class algorithm_base {
 public:
     static constexpr std::int64_t default_file_count = 5;
     static constexpr std::int64_t default_test_count = 21;
