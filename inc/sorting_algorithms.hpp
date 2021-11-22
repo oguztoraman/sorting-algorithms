@@ -30,7 +30,7 @@ public:
         compare(const std::bitset<sorting_algorithm_count{}>& algorithm_select
                 = algorithms::all) const
     {
-        return base::compare(algorithm_select, algorithm_names, functions);
+        return base::compare_impl(algorithm_select, algorithm_names, functions);
     }
 
 private:

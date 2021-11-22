@@ -31,11 +31,11 @@ struct algorithm_count {
 };
 
 template <typename NumType, std::size_t AlgorithmCount>
-class algorithm_base {
+class algorithm_base  {
 public:
     static constexpr std::int64_t default_file_count = 5;
     static constexpr std::int64_t default_test_count = 21;
-    static constexpr std::int64_t default_input_size  = 5'000;
+    static constexpr std::int64_t default_input_size = 5'000;
 
     static_assert(
         std::is_arithmetic_v<NumType> &&
@@ -308,9 +308,9 @@ protected:
 
     template <typename Name, typename Function>
     [[nodiscard]] std::string
-        compare(const std::bitset<AlgorithmCount>& algorithm_select,
-                const Name (&algorithm_names)[AlgorithmCount],
-                const Function (&functions)[AlgorithmCount]) const
+        compare_impl(const std::bitset<AlgorithmCount>& algorithm_select,
+                     const Name (&algorithm_names)[AlgorithmCount],
+                     const Function (&functions)[AlgorithmCount]) const
     {
         std::ostringstream oss;
         oss << table_title();
