@@ -22,11 +22,11 @@
 
 namespace project {
 
-template <std::size_t n>
+template <std::size_t N>
 struct algorithm_count {
     constexpr operator std::size_t() const noexcept
     {
-        return n;
+        return N;
     }
 };
 
