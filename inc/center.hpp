@@ -42,6 +42,6 @@ inline std::basic_istream<Char, Traits>&
     return is;
 }
 
-} //namespace
+} //namespace project
 
 #endif // CENTER_HPP

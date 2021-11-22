@@ -24,24 +24,7 @@ public:
     };
 
     using base = algorithm_base<NumType, sorting_algorithm_count{}>;
-
-    sorting_algorithms() = default;
-
-    template <typename InIter> requires std::input_iterator<InIter>
-    sorting_algorithms(
-            std::enable_if_t<!std::is_integral_v<InIter>, InIter> beg, InIter end,
-            std::int64_t test_count = sorting_algorithms::default_test_count)
-        : base{beg, end, test_count}  { }
-
-    sorting_algorithms(
-            std::int64_t input_size,
-            std::int64_t test_count = sorting_algorithms::default_test_count)
-        : base{input_size, test_count}{ }
-
-    sorting_algorithms(
-            const std::string& filename,
-            std::int64_t test_count = sorting_algorithms::default_test_count)
-        : base{filename, test_count}  { }
+    using base::algorithm_base;
 
     [[nodiscard]] std::string
         compare(const std::bitset<sorting_algorithm_count{}>& algorithm_select
@@ -256,6 +239,6 @@ private:
     }
 };
 
-} //namespace
+} //namespace project
 
 #endif // SORTING_ALGORITHMS_HPP

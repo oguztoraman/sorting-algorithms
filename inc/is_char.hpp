@@ -44,6 +44,6 @@ struct is_char
 template <typename T>
 inline constexpr bool is_char_v = is_char<T>::value;
 
-} //namespace
+} //namespace project
 
 #endif // IS_CHAR_HPP

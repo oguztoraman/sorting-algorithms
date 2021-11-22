@@ -43,7 +43,6 @@ public:
         "template argument must be an integral or a floating point type"
     );
 
-protected:
     algorithm_base()
         : algorithm_base(default_input_size, default_test_count) { }
 
@@ -87,7 +86,6 @@ protected:
         check_argumants(m_test_count, m_input_size);
     }
 
-public:
     std::int64_t get_test_count() const noexcept
     {
         return m_test_count;
@@ -372,6 +370,6 @@ protected:
     }
 };
 
-} //namespace
+} //namespace project
 
 #endif // ALGORITHM_BASE_HPP
