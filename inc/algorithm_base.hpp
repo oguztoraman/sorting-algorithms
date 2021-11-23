@@ -196,7 +196,7 @@ protected:
     std::int64_t m_test_count{};
     std::int64_t m_input_size{};
 
-    static constexpr int table_columns[]{
+    static constexpr int table_columns_width[]{
         13, 16, 14, 21, 21, 25, 25,
         3, 2, 3, 3
     };
@@ -242,10 +242,10 @@ protected:
         minutes min{duration_cast<minutes>(us)};
         us %= 1ms;
         std::ostringstream time;
-        time << std::setw(table_columns[7])  << min.count() << "m "
-             << std::setw(table_columns[8])  << s.count()   << "s "
-             << std::setw(table_columns[9])  << ms.count()  << "ms "
-             << std::setw(table_columns[10]) << us.count()  << "us";
+        time << std::setw(table_columns_width[7])  << min.count() << "m "
+             << std::setw(table_columns_width[8])  << s.count()   << "s "
+             << std::setw(table_columns_width[9])  << ms.count()  << "ms "
+             << std::setw(table_columns_width[10]) << us.count()  << "us";
         return time.str();
     }
 
@@ -254,7 +254,7 @@ protected:
                                         int column, const format& manip)
     {
         const auto length{std::ssize(str)};
-        const auto max_length{table_columns[column]};
+        const auto max_length{table_columns_width[column]};
         if ((length + 2) > max_length){
             throw std::runtime_error{
                 "failed to create table, table size exceeded"
@@ -294,13 +294,13 @@ protected:
     [[nodiscard]]
         static std::string table_horizontal_line(char c)
     {
-        return c + std::string(table_columns[0], '-') + c +
-                   std::string(table_columns[1], '-') + c +
-                   std::string(table_columns[2], '-') + c +
-                   std::string(table_columns[3], '-') + c +
-                   std::string(table_columns[4], '-') + c +
-                   std::string(table_columns[5], '-') + c +
-                   std::string(table_columns[6], '-') + c + "\n";
+        return c + std::string(table_columns_width[0], '-') + c +
+                   std::string(table_columns_width[1], '-') + c +
+                   std::string(table_columns_width[2], '-') + c +
+                   std::string(table_columns_width[3], '-') + c +
+                   std::string(table_columns_width[4], '-') + c +
+                   std::string(table_columns_width[5], '-') + c +
+                   std::string(table_columns_width[6], '-') + c + "\n";
     }
 
     using algorithmSignature =
