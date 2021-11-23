@@ -212,7 +212,8 @@ protected:
             throw std::runtime_error{
                 "input size cannot be zero or negative"
             };
-        } else if (test_count <= 0){
+        }
+        if (test_count <= 0){
             throw std::runtime_error{
                 "test count cannot be zero or negative"
             };
