@@ -16,11 +16,11 @@ struct is_char_helper<char>
 template<>
 struct is_char_helper<wchar_t>
         : public std::true_type { };
-
+/*
 template<>
 struct is_char_helper<char8_t>
         : public std::true_type { };
-
+*/
 template<>
 struct is_char_helper<char16_t>
         : public std::true_type { };

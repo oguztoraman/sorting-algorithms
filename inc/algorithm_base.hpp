@@ -86,22 +86,26 @@ public:
         check_argumants(m_test_count, m_input_size);
     }
 
-    std::int64_t get_test_count() const noexcept
+    [[nodiscard]]
+        std::int64_t get_test_count() const noexcept
     {
         return m_test_count;
     }
 
-    std::int64_t get_input_size() const noexcept
+    [[nodiscard]]
+        std::int64_t get_input_size() const noexcept
     {
         return m_input_size;
     }
 
-    std::vector<NumType>& get_inputs() const & noexcept
+    [[nodiscard]]
+        std::vector<NumType>& get_inputs() const & noexcept
     {
         return m_vec;
     }
 
-    std::vector<NumType> get_inputs() &&
+    [[nodiscard]]
+        std::vector<NumType> get_inputs() &&
     {
         return m_vec;
     }

@@ -50,7 +50,8 @@ inline const auto help_message{
     "author: Oğuz Toraman <oguz.toraman@protonmail.com> @2021"
 };
 
-inline bool is_number(const std::string_view& sv)
+[[nodiscard]]
+    inline bool is_number(const std::string_view& sv)
 {
     return (sv.find_first_not_of("0123456789") == std::string::npos);
 }

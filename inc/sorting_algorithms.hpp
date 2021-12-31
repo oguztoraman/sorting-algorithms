@@ -24,7 +24,7 @@ public:
     };
 
     using base = algorithm_base<NumType, sorting_algorithm_count{}>;
-    using base::algorithm_base;
+    using typename base::algorithm_base;
 
     [[nodiscard]] std::string
         compare(const std::bitset<sorting_algorithm_count{}>& algorithm_select
