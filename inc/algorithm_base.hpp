@@ -170,10 +170,10 @@ public:
                 std::chrono::system_clock::now().time_since_epoch().count()
             )
         };
-        if constexpr (std::is_integral_v<NumType>){
+        if constexpr (std::integral<NumType>){
             static std::uniform_int_distribution<NumType> distribution{min, max};
             return distribution(eng);
-        } else {
+        } else if constexpr (std::floating_point<NumType>){
             static std::uniform_real_distribution<NumType> distribution{min, max};
             return distribution(eng);
         }
