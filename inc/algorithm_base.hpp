@@ -93,6 +93,13 @@ public:
         return m_vec;
     }
 
+    template <algorithm_container Container>
+    algorithm_base& operator=(const Container& c)
+    {
+        set(c);
+        return *this;
+    }
+
     void set_test_count(std::int64_t test_count)
     {
         m_test_count = test_count;
