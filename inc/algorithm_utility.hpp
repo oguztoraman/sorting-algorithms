@@ -61,6 +61,12 @@ template <typename T>
 concept algorithm_number_type = is_arithmetic<T> &&
         !is_char<T> && !std::same_as<T, bool>;
 
+template <typename Container>
+concept algorithm_container = requires {
+    std::input_iterator<typename Container::iterator>;
+    algorithm_number_type<typename Container::value_type>;
+};
+
 /* center manipulator */
 
 template <typename T>
