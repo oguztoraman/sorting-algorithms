@@ -15,40 +15,24 @@
 #include <iterator>
 #include <algorithm>
 #include <functional>
-#include <type_traits>
 
-#include <center.hpp>
-#include <is_char.hpp>
+#include <algorithm_utility.hpp>
 
 namespace project {
 
-template <std::size_t N>
-struct algorithm_count {
-    constexpr operator std::size_t() const noexcept
-    {
-        return N;
-    }
-};
-
-template <typename NumType, std::size_t AlgorithmCount>
+template <algorithm_number_type NumType, std::size_t AlgorithmCount>
 class algorithm_base {
 public:
     static constexpr std::int64_t default_file_count = 5;
     static constexpr std::int64_t default_test_count = 21;
     static constexpr std::int64_t default_input_size = 5'000;
 
-    static_assert(
-        std::is_arithmetic_v<NumType> &&
-        !is_char_v<NumType> && !std::is_same_v<NumType, bool>,
-        "template argument must be an integral or a floating point type"
-    );
-
     algorithm_base()
         : algorithm_base(default_input_size, default_test_count) { }
 
-    template <typename InIter> requires std::input_iterator<InIter>
-    algorithm_base(std::enable_if_t<!std::is_integral_v<InIter>, InIter> beg,
-                   InIter end, std::int64_t test_count = default_test_count)
+    template <std::input_iterator InIter>
+    algorithm_base(InIter beg, InIter end,
+                   std::int64_t test_count = default_test_count)
         : m_vec(beg, end),
           m_test_count{test_count},
           m_input_size{std::ssize(m_vec)}
@@ -116,9 +100,9 @@ public:
         check_argumants(m_test_count, m_input_size);
     }
 
-    template <typename InIter> requires std::input_iterator<InIter>
-    void set(std::enable_if<!std::is_integral_v<InIter>, InIter> beg,
-             InIter end, std::int64_t test_count = default_test_count)
+    template <std::input_iterator InIter>
+    void set(InIter beg, InIter end,
+             std::int64_t test_count = default_test_count)
     {
         m_test_count = test_count;
         m_vec = std::move(std::vector<NumType>(beg, end));

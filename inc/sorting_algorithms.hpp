@@ -5,12 +5,11 @@
 
 namespace project {
 
-struct sorting_algorithm_count
-        : public algorithm_count<6> { };
+static constexpr std::size_t sorting_algorithm_count = 6;
 
-template <typename NumType = int>
+template <algorithm_number_type NumType = int>
 class sorting_algorithms
-        : public algorithm_base<NumType, sorting_algorithm_count{}> {
+        : public algorithm_base<NumType, sorting_algorithm_count> {
 public:
     enum algorithms {
         selection = 1L << 0,
@@ -20,14 +19,28 @@ public:
         insertion = 1L << 4,
         heap      = 1L << 5,
 
-        all       = (1L << sorting_algorithm_count{}) - 1
+        all       = (1L << sorting_algorithm_count) - 1
     };
 
-    using base = algorithm_base<NumType, sorting_algorithm_count{}>;
-    using typename base::algorithm_base;
+    using base = algorithm_base<NumType, sorting_algorithm_count>;
+
+    sorting_algorithms() = default;
+
+    template <std::input_iterator InIter>
+    sorting_algorithms(InIter beg, InIter end,
+                       std::int64_t test_count = base::default_test_count)
+    {
+        base::algorithm_base(beg, end, test_count);
+    }
+
+    sorting_algorithms(std::int64_t input_size,
+                       std::int64_t test_count = base::default_test_count)
+    {
+        base::algorithm_base(input_size, test_count);
+    }
 
     [[nodiscard]] std::string
-        compare(const std::bitset<sorting_algorithm_count{}>& algorithm_select
+        compare(const std::bitset<sorting_algorithm_count>& algorithm_select
                 = algorithms::all) const
     {
         return base::compare_impl(algorithm_select, algorithm_names, functions);
