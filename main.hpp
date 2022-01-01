@@ -56,7 +56,7 @@ inline const auto help_message{
     return (sv.find_first_not_of("0123456789") == std::string::npos);
 }
 
-inline void check_argumants(const std::string& input_size_or_file)
+inline void check_argumants_and_assign(const std::string& input_size_or_file)
 {
     if ("-h"         == input_size_or_file ||
         "--help"     == input_size_or_file ||
@@ -70,8 +70,10 @@ inline void check_argumants(const std::string& input_size_or_file)
     }
 }
 
-inline void check_argumants(const std::string& input_size_or_file,
-                     const std::string& file_number_or_test_number, bool& compare)
+inline void
+    check_argumants_and_assign(const std::string& input_size_or_file,
+                               const std::string& file_number_or_test_number,
+                               bool& compare)
 {
     if ("-gen"       == input_size_or_file ||
         "--generate" == input_size_or_file){
@@ -105,9 +107,10 @@ inline void check_argumants(const std::string& input_size_or_file,
     }
 }
 
-inline void check_argumants(const std::string& input_size_or_file,
-                     const std::string& file_number_or_test_number,
-                     const std::string& input_size, bool& compare)
+inline void
+    check_argumants_and_assign(const std::string& input_size_or_file,
+                               const std::string& file_number_or_test_number,
+                               const std::string& input_size, bool& compare)
 {
     if ("-gen"       == input_size_or_file ||
         "--generate" == input_size_or_file){
