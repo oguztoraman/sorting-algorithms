@@ -7,9 +7,9 @@ namespace project {
 
 static constexpr std::size_t sorting_algorithm_count = 6;
 
-template <algorithm_number_type NumType = int>
+template <algorithm_value_type ValueType = int>
 class sorting_algorithms
-        : public algorithm_base<NumType, sorting_algorithm_count> {
+        : public algorithm_base<ValueType, sorting_algorithm_count> {
 public:
     enum algorithms {
         selection = 1L << 0,
@@ -22,15 +22,13 @@ public:
         all       = (1L << sorting_algorithm_count) - 1
     };
 
-    using base = algorithm_base<NumType, sorting_algorithm_count>;
+    using base = algorithm_base<ValueType, sorting_algorithm_count>;
 
     sorting_algorithms() = default;
 
-    template <std::input_iterator InIter>
-    sorting_algorithms(InIter beg, InIter end,
+    sorting_algorithms(const algorithm_container auto& c,
                        std::int64_t test_count = base::default_test_count)
-        : base::algorithm_base{beg, end, test_count}   { }
-
+        : base::algorithm_base(c, test_count)          { }
 
     sorting_algorithms(std::int64_t input_size,
                        std::int64_t test_count = base::default_test_count)
@@ -58,7 +56,7 @@ private:
     };
 
     static void
-        selection_sort(std::vector<NumType>& vec, const std::int64_t& size,
+        selection_sort(std::vector<ValueType>& vec, const std::int64_t& size,
                        std::uint64_t& comparison, std::uint64_t& assignment)
     {
         for (std::int64_t i{}; i < size - 1; ++i){
@@ -75,7 +73,7 @@ private:
     }
 
     static void
-        bubble_sort(std::vector<NumType>& vec, const std::int64_t& size,
+        bubble_sort(std::vector<ValueType>& vec, const std::int64_t& size,
                     std::uint64_t& comparison, std::uint64_t& assignment)
     {
         for (std::int64_t i{}; i < size - 1; ++i){
@@ -90,7 +88,7 @@ private:
     }
 
     static void
-        quick_sort(std::vector<NumType>& vec, const std::int64_t& size,
+        quick_sort(std::vector<ValueType>& vec, const std::int64_t& size,
                    std::uint64_t& comparison, std::uint64_t& assignment)
     {
           quick_sort_helper_1(vec, 0, size - 1, comparison, assignment);
@@ -98,7 +96,7 @@ private:
 
     static void
         quick_sort_helper_1(
-            std::vector<NumType>& vec, std::int64_t low, std::int64_t high,
+            std::vector<ValueType>& vec, std::int64_t low, std::int64_t high,
             std::uint64_t& comparison, std::uint64_t& assignment)
     {
         if (low < high){
@@ -112,10 +110,10 @@ private:
 
     [[nodiscard]] static std::int64_t
         quick_sort_helper_2(
-            std::vector<NumType>& vec, std::int64_t low, std::int64_t high,
+            std::vector<ValueType>& vec, std::int64_t low, std::int64_t high,
             std::uint64_t& comparison, std::uint64_t& assignment)
     {
-        NumType pivot{vec[high]};
+        ValueType pivot{vec[high]};
         std::int64_t i{low - 1};
         for (std::int64_t j{low}; j < high; ++j){
             if (vec[j] <= pivot){
@@ -131,7 +129,7 @@ private:
     }
 
     static void
-        merge_sort(std::vector<NumType>& vec, const std::int64_t& size,
+        merge_sort(std::vector<ValueType>& vec, const std::int64_t& size,
                    std::uint64_t& comparison, std::uint64_t& assignment)
     {
         merge_sort_helper_1(vec, 0, size - 1, comparison, assignment);
@@ -139,7 +137,7 @@ private:
 
     static void
         merge_sort_helper_1(
-            std::vector<NumType>& vec, std::int64_t l, std::int64_t r,
+            std::vector<ValueType>& vec, std::int64_t l, std::int64_t r,
             std::uint64_t& comparison, std::uint64_t& assignment)
     {
         if (l < r) {
@@ -151,13 +149,13 @@ private:
     }
 
     static void
-        merge_sort_helper_2(std::vector<NumType>& vec,
+        merge_sort_helper_2(std::vector<ValueType>& vec,
                             std::int64_t p, std::int64_t q, std::int64_t r,
                             std::uint64_t& comparison, std::uint64_t& assignment)
     {
         std::int64_t n1{q - p + 1};
         std::int64_t n2{r - q};
-        std::vector<NumType> L, M;
+        std::vector<ValueType> L, M;
         L.reserve(n1);
         M.reserve(n2);
         for (std::int64_t i{}; i < n1; ++i){
@@ -194,11 +192,11 @@ private:
     }
 
     static void
-        insertion_sort(std::vector<NumType>& vec, const std::int64_t& size,
+        insertion_sort(std::vector<ValueType>& vec, const std::int64_t& size,
                        std::uint64_t& comparison, std::uint64_t& assignment)
     {
         for (std::int64_t i{1}; i < size; ++i) {
-            NumType key{vec[i]};
+            ValueType key{vec[i]};
             std::int64_t j{i - 1};
             while (key < vec[j] && j >= 0) {
                 ++comparison;
@@ -212,7 +210,7 @@ private:
     }
 
     static void
-        heap_sort(std::vector<NumType>& vec, const std::int64_t& size,
+        heap_sort(std::vector<ValueType>& vec, const std::int64_t& size,
                   std::uint64_t& comparison, std::uint64_t& assignment)
     {
         for (std::int64_t i{size / 2 - 1}; i >= 0; --i){
@@ -227,7 +225,7 @@ private:
 
     static void
         heap_sort_helper(
-            std::vector<NumType>& vec, const std::int64_t& size, std::int64_t i,
+            std::vector<ValueType>& vec, const std::int64_t& size, std::int64_t i,
             std::uint64_t& comparison, std::uint64_t& assignment)
     {
         std::int64_t largest{i};

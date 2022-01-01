@@ -58,14 +58,16 @@ template <typename T>
 concept is_arithmetic = std::integral<T> || std::floating_point<T>;
 
 template <typename T>
-concept algorithm_number_type = is_arithmetic<T> &&
+concept algorithm_value_type = is_arithmetic<T> &&
         !is_char<T> && !std::same_as<T, bool>;
 
 template <typename Container>
-concept algorithm_container = requires {
-    std::input_iterator<typename Container::iterator>;
-    algorithm_number_type<typename Container::value_type>;
-};
+concept algorithm_container =
+        requires (Container c){
+            cbegin(c); cend(c);
+        } &&
+        algorithm_value_type<typename Container::value_type> &&
+        std::input_iterator<typename Container::const_iterator>;
 
 /* center manipulator */
 

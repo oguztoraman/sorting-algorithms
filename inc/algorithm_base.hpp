@@ -20,7 +20,7 @@
 
 namespace project {
 
-template <algorithm_number_type NumType, std::size_t AlgorithmCount>
+template <algorithm_value_type ValueType, std::size_t AlgorithmCount>
 class algorithm_base {
 public:
     static constexpr std::int64_t default_file_count = 5;
@@ -30,10 +30,9 @@ public:
     algorithm_base()
         : algorithm_base(default_input_size, default_test_count) { }
 
-    template <std::input_iterator InIter>
-    algorithm_base(InIter beg, InIter end,
-                   std::int64_t test_count = default_test_count)
-        : m_vec(beg, end),
+    template <algorithm_container Container>
+    algorithm_base(const Container& c, std::int64_t test_count = default_test_count)
+        : m_vec(cbegin(c), cend(c)),
           m_test_count{test_count},
           m_input_size{std::ssize(m_vec)}
     {
@@ -61,7 +60,7 @@ public:
         if (!ifs){
             throw std::runtime_error{"failed to open " + filename};
         }
-        NumType input{};
+        ValueType input{};
         while(ifs >> input){
             m_vec.push_back(input);
         }
@@ -83,13 +82,13 @@ public:
     }
 
     [[nodiscard]]
-        std::vector<NumType>& get_inputs() const & noexcept
+        std::vector<ValueType>& get_inputs() const & noexcept
     {
         return m_vec;
     }
 
     [[nodiscard]]
-        std::vector<NumType> get_inputs() &&
+        std::vector<ValueType> get_inputs() &&
     {
         return m_vec;
     }
@@ -100,12 +99,11 @@ public:
         check_argumants(m_test_count, m_input_size);
     }
 
-    template <std::input_iterator InIter>
-    void set(InIter beg, InIter end,
-             std::int64_t test_count = default_test_count)
+    template <algorithm_container Container>
+    void set(const Container& c, std::int64_t test_count = default_test_count)
     {
         m_test_count = test_count;
-        m_vec = std::move(std::vector<NumType>(beg, end));
+        m_vec = std::move(std::vector<ValueType>(cbegin(c), cend(c)));
         m_input_size = std::ssize(m_vec);
         check_argumants(m_test_count, m_input_size);
     }
@@ -133,7 +131,7 @@ public:
         if (!ifs){
             throw std::runtime_error{"failed to open " + filename};
         }
-        NumType input{};
+        ValueType input{};
         while(ifs >> input){
             m_vec.push_back(input);
         }
@@ -145,8 +143,8 @@ public:
     static void
         generate_input_files(std::int64_t input_size = default_input_size,
                              std::int64_t file_count = default_file_count,
-                             NumType min = std::numeric_limits<NumType>::min(),
-                             NumType max = std::numeric_limits<NumType>::max())
+                             ValueType min = std::numeric_limits<ValueType>::min(),
+                             ValueType max = std::numeric_limits<ValueType>::max())
     {
         for (std::int64_t i{1}; i <= file_count; ++i){
             std::ofstream ofs{"input" + std::to_string(i) + ".txt"};
@@ -161,26 +159,26 @@ public:
         }
     }
 
-    [[nodiscard]] static NumType
-        generate_random_numbers(NumType min = std::numeric_limits<NumType>::min(),
-                                NumType max = std::numeric_limits<NumType>::max())
+    [[nodiscard]] static ValueType
+        generate_random_numbers(ValueType min = std::numeric_limits<ValueType>::min(),
+                                ValueType max = std::numeric_limits<ValueType>::max())
     {
         static std::mt19937_64 eng{
             static_cast<unsigned long>(
                 std::chrono::system_clock::now().time_since_epoch().count()
             )
         };
-        if constexpr (std::integral<NumType>){
-            static std::uniform_int_distribution<NumType> distribution{min, max};
+        if constexpr (std::integral<ValueType>){
+            static std::uniform_int_distribution<ValueType> distribution{min, max};
             return distribution(eng);
-        } else if constexpr (std::floating_point<NumType>){
-            static std::uniform_real_distribution<NumType> distribution{min, max};
+        } else if constexpr (std::floating_point<ValueType>){
+            static std::uniform_real_distribution<ValueType> distribution{min, max};
             return distribution(eng);
         }
     }
 
 protected:
-    std::vector<NumType> m_vec;
+    std::vector<ValueType> m_vec;
     std::int64_t m_test_count{};
     std::int64_t m_input_size{};
 
@@ -292,7 +290,7 @@ protected:
     }
 
     using algorithmSignature =
-        void(std::vector<NumType>&, const std::int64_t&,
+        void(std::vector<ValueType>&, const std::int64_t&,
              std::uint64_t&, std::uint64_t&);
 
     template <typename Name, typename Function>
@@ -341,7 +339,7 @@ protected:
         std::uint64_t comparison{}, assignment{};
         time_vec.reserve(m_test_count);
         for (std::int64_t i{}; i < m_test_count; ++i){
-            std::vector<NumType> temp(begin(m_vec), end(m_vec));
+            std::vector<ValueType> temp(begin(m_vec), end(m_vec));
             auto start = std::chrono::steady_clock::now();
             algorithm(temp, m_input_size, comparison, assignment);
             auto end = std::chrono::steady_clock::now();
