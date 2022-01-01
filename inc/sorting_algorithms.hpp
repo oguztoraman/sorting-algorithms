@@ -29,15 +29,12 @@ public:
     template <std::input_iterator InIter>
     sorting_algorithms(InIter beg, InIter end,
                        std::int64_t test_count = base::default_test_count)
-    {
-        base::algorithm_base(beg, end, test_count);
-    }
+        : base::algorithm_base{beg, end, test_count}   { }
+
 
     sorting_algorithms(std::int64_t input_size,
                        std::int64_t test_count = base::default_test_count)
-    {
-        base::algorithm_base(input_size, test_count);
-    }
+        : base::algorithm_base{input_size, test_count} { }
 
     [[nodiscard]] std::string
         compare(const std::bitset<sorting_algorithm_count>& algorithm_select
