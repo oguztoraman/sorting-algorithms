@@ -350,7 +350,7 @@ protected:
         for (std::int64_t i{}; i < m_test_count; ++i){
             std::vector<ValueType> temp(begin(m_vec), end(m_vec));
             auto start = std::chrono::steady_clock::now();
-            algorithm(temp, m_input_size, comparison, assignment);
+            std::invoke(algorithm, temp, m_input_size, comparison, assignment);
             auto end = std::chrono::steady_clock::now();
             us time_interval{std::chrono::duration_cast<us>(end - start)};
             time_vec.push_back(time_interval.count());
