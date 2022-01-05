@@ -26,7 +26,9 @@ public:
 
     sorting_algorithms() = default;
 
-    sorting_algorithms(const algorithm_container auto& c,
+    template <algorithm_container Container>
+    requires std::same_as<typename Container::value_type, ValueType>
+    sorting_algorithms(const Container& c,
                        std::int64_t test_count = base::default_test_count)
         : base::algorithm_base(c, test_count)          { }
 

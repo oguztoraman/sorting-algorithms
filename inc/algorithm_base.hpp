@@ -31,8 +31,9 @@ public:
         : algorithm_base(default_input_size, default_test_count) { }
 
     template <algorithm_container Container>
+    requires std::same_as<typename Container::value_type, ValueType>
     algorithm_base(const Container& c, std::int64_t test_count = default_test_count)
-        : m_vec(cbegin(c), cend(c)),
+        : m_vec(begin(c), end(c)),
           m_test_count{test_count},
           m_input_size{std::ssize(m_vec)}
     {
@@ -94,6 +95,7 @@ public:
     }
 
     template <algorithm_container Container>
+    requires std::same_as<typename Container::value_type, ValueType>
     algorithm_base& operator=(const Container& c)
     {
         set(c);

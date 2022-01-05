@@ -64,10 +64,12 @@ concept algorithm_value_type = is_arithmetic<T> &&
 template <typename Container>
 concept algorithm_container =
         requires (Container c){
-            cbegin(c); cend(c);
+            begin(c); end(c);
+            Container::value_type;
+            Container::iterator;
         } &&
         algorithm_value_type<typename Container::value_type> &&
-        std::input_iterator<typename Container::const_iterator>;
+        std::input_iterator<typename Container::iterator>;
 
 /* center manipulator */
 
