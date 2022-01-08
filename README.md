@@ -3,6 +3,19 @@
 # Sorting Algorithms
 A C++20 program to compare sorting algorithms with command line user interface
 
+## Required Softwares
++ git
++ g++ version >= 10
++ cmake version >= 3.14
+
+## Installation
+1. clone 
+> ```git clone https://github.com/oguztoraman/sorting-algorithms```
+2. build 
+> ```cd sorting-algorithms && cmake . && make```
+3. run
+> ```./sorting-algorithms -h```
+
 ## Sample Output
 ```
 +-------------+----------------+--------------+---------------------+---------------------+-------------------------+-------------------------+
@@ -21,3 +34,4 @@ A C++20 program to compare sorting algorithms with command line user interface
 |     heap    |          5'000 |           21 |              75'821 |             114'368 |     0m  0s   3ms  16us  |     0m  0s   3ms 114us  |
 +-------------+----------------+--------------+---------------------+---------------------+-------------------------+-------------------------+
 ```
+
