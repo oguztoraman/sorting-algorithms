@@ -109,6 +109,7 @@ public:
     }
 
     template <algorithm_container Container>
+    requires std::same_as<typename Container::value_type, ValueType>
     void set(const Container& c, std::int64_t test_count = default_test_count)
     {
         m_test_count = test_count;
