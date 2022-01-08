@@ -113,7 +113,7 @@ public:
     void set(const Container& c, std::int64_t test_count = default_test_count)
     {
         m_test_count = test_count;
-        m_vec = std::move(std::vector<ValueType>(cbegin(c), cend(c)));
+        m_vec = std::move(std::vector<ValueType>(begin(c), end(c)));
         m_input_size = std::ssize(m_vec);
         check_argumants(m_test_count, m_input_size);
     }
