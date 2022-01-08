@@ -10,11 +10,17 @@ A C++20 program to compare sorting algorithms with command line user interface
 
 ## Installation
 1. clone 
-> ```git clone https://github.com/oguztoraman/sorting-algorithms```
+```
+git clone https://github.com/oguztoraman/sorting-algorithms
+```
 2. build 
-> ```cd sorting-algorithms && cmake . && make```
+```
+cd sorting-algorithms && cmake . && make
+```
 3. run
-> ```./sorting-algorithms -h```
+```
+./sorting-algorithms -h
+```
 
 ## Sample Output
 ```
