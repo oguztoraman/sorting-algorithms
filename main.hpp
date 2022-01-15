@@ -10,12 +10,20 @@ using T = int;
 
 inline project::sorting_algorithms<T> algorithms;
 
-inline const auto default_test_count{
+inline const auto default_test_count_s{
     std::to_string(project::sorting_algorithms<T>::default_test_count)
 };
 
-inline const auto default_input_size{
+inline const auto default_input_size_s{
     std::to_string(project::sorting_algorithms<T>::default_input_size)
+};
+
+inline const auto default_test_count{
+    project::sorting_algorithms<T>::default_test_count
+};
+
+inline const auto default_input_size{
+    project::sorting_algorithms<T>::default_input_size
 };
 
 inline const auto help_message{
@@ -23,16 +31,16 @@ inline const auto help_message{
     "a C++20 program to compare sorting algorithms\n\n"
     "usage;\n"
     "sorting-algorithms\n"
-    "\tcompare sorting algorithms with " + default_input_size +
-    " random numbers " + default_test_count + " times\n\n"
+    "\tcompare sorting algorithms with " + default_input_size_s +
+    " random numbers " + default_test_count_s + " times\n\n"
     "sorting-algorithms -h/--help\n"
     "\tprint this help message\n\n"
     "sorting-algorithms <input_size>\n"
     "\tcompare sorting algorithms with "
-    "<input_size> random numbers " + default_test_count + " times\n\n"
+    "<input_size> random numbers " + default_test_count_s + " times\n\n"
     "sorting-algorithms <input_file>\n"
     "\tcompare sorting algorithms with "
-    "reading numbers from <input_file> " + default_test_count + " times\n\n"
+    "reading numbers from <input_file> " + default_test_count_s + " times\n\n"
     "sorting-algorithms <input_size> <test_number>\n"
     "\tcompare sorting algorithms sort with "
     "<input_size> random numbers <test_number> times\n\n"
@@ -41,7 +49,7 @@ inline const auto help_message{
     "reading numbers from <input_file> <test_number> times\n\n"
     "sorting-algorithms -gen/--generate <file_number>\n"
     "\tgenerate <file_number> files, each containing " +
-    default_input_size + " random numbers\n\n"
+    default_input_size_s + " random numbers\n\n"
     "sorting-algorithms -gen/--generate <file_number> <input_size>\n"
     "\tgenerate <file_number> files, each containing"
     " <input_size> random numbers\n\n"
@@ -80,12 +88,12 @@ inline void
         if (is_number(file_number_or_test_number)){
             compare = false;
             project::sorting_algorithms<T>::generate_input_files(
-                project::sorting_algorithms<T>::default_input_size,
+                default_input_size,
                 std::stoll(file_number_or_test_number)
             );
             std::cout << "generated " << file_number_or_test_number
                       << " files, each containing "
-                      << default_input_size
+                      << project::sorting_algorithms<T>::readable(default_input_size)
                       << " random inputs\n";
         } else {
             throw std::runtime_error{help_message};
@@ -122,7 +130,8 @@ inline void
             );
             std::cout << "generated " << file_number_or_test_number
                       << " files, each containing "
-                      << input_size << " random inputs\n";
+                      << project::sorting_algorithms<T>::readable(std::stoll(input_size))
+                      << " random inputs\n";
         } else {
             throw std::runtime_error{help_message};
         }
