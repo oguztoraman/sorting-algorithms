@@ -187,6 +187,19 @@ public:
         }
     }
 
+    [[nodiscard]]
+    static std::string readable(std::int64_t number)
+    {
+        auto str{std::to_string(number)};
+        std::int64_t counter{};
+        for (auto i{std::ssize(str)}; i >= 0; --i, ++counter){
+            if (counter % 3 == 0 && counter > 0 && i != 0){
+                str.insert(i, "'");
+            }
+        }
+        return str;
+    }
+
 protected:
     std::vector<ValueType> m_vec;
     std::int64_t m_test_count{};
@@ -214,19 +227,6 @@ protected:
                 "test count cannot be zero or negative"
             };
         }
-    }
-
-    [[nodiscard]]
-        static std::string readable(std::int64_t number)
-    {
-        auto str{std::to_string(number)};
-        std::int64_t counter{};
-        for (auto i{std::ssize(str)}; i >= 0; --i, ++counter){
-            if (counter % 3 == 0 && counter > 0 && i != 0){
-                str.insert(i, "'");
-            }
-        }
-        return str;
     }
 
     [[nodiscard]]
