@@ -26,7 +26,7 @@ public:
     template <algorithm_container Container>
     requires std::same_as<typename Container::value_type, ValueType>
     algorithm_base(const Container& c, std::int64_t test_count = default_test_count)
-        : m_vec(begin(c), end(c)),
+        : m_vec{begin(c), end(c)},
           m_test_count{test_count},
           m_input_size{std::ssize(m_vec)}
     {
@@ -106,7 +106,7 @@ public:
     void set(const Container& c, std::int64_t test_count = default_test_count)
     {
         m_test_count = test_count;
-        m_vec = std::move(std::vector<ValueType>(begin(c), end(c)));
+        m_vec = std::move(std::vector<ValueType>{begin(c), end(c)});
         m_input_size = std::ssize(m_vec);
         check_argumants(m_test_count, m_input_size);
     }
@@ -304,7 +304,7 @@ protected:
     {
         std::ostringstream oss;
         oss << table_title();
-        for (int i{}; i < AlgorithmCount; ++i){
+        for (std::size_t i{}; i < AlgorithmCount; ++i){
             if (algorithm_select[i]){
                 oss << table_row(algorithm_names[i], functions[i]);
             }
