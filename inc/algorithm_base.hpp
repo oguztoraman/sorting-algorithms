@@ -1,19 +1,12 @@
 #ifndef ALGORITHM_BASE_HPP
 #define ALGORITHM_BASE_HPP
 
-#include <tuple>
 #include <bitset>
 #include <vector>
-#include <string>
 #include <chrono>
 #include <random>
 #include <limits>
 #include <fstream>
-#include <numeric>
-#include <cstdint>
-#include <sstream>
-#include <iterator>
-#include <algorithm>
 #include <functional>
 
 #include <algorithm_utility.hpp>

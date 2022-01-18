@@ -1,8 +1,6 @@
 #ifndef ALGORITHM_UTILITY_HPP
 #define ALGORITHM_UTILITY_HPP
 
-#include <iosfwd>
-#include <string>
 #include <iomanip>
 #include <concepts>
 
