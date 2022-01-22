@@ -1,6 +1,8 @@
 #ifndef ALGORITHM_UTILITY_HPP
 #define ALGORITHM_UTILITY_HPP
 
+static_assert (__cplusplus >= 202002L, "c++20 required!");
+
 #include <iomanip>
 #include <concepts>
 
