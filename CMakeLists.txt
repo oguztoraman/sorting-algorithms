@@ -8,6 +8,6 @@ set(CMAKE_CXX_COMPILER g++)
 
 add_compile_options(-Wall -Werror)
 
-include_directories("${PROJECT_SOURCE_DIR}/inc")
+include_directories("${PROJECT_SOURCE_DIR}/inc" "${PROJECT_SOURCE_DIR}")
 
 add_executable(sorting-algorithms main.cpp)
