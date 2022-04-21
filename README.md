@@ -1,26 +1,42 @@
 # Sorting Algorithms
-A C++20 program to compare sorting algorithms with command line user interface
 
-## Required Softwares
+A C++20 program to compare sorting algorithms with command line user interface.
+
+## Requirements
+
 + git
 + g++ version >= 10
 + cmake version >= 3.14
++ [{fmt}](https://fmt.dev/latest/index.html)
+
+## Installing Requirements
+
+> For Fedora
+
+```
+sudo dnf install cmake make g++ git fmt-devel
+```
+
 
 ## Installation
+
 1. clone 
 ```
 git clone https://github.com/oguztoraman/sorting-algorithms
 ```
+
 2. build 
 ```
 cd sorting-algorithms && cmake . && make
 ```
+
 3. run
 ```
 ./sorting-algorithms -h
 ```
 
 ## Sample Output
+
 ```
 +-------------+----------------+--------------+---------------------+---------------------+-------------------------+-------------------------+
 |  algorithm  |   input size   |  # of tests  |   # of comparisons  |   # of assignments  |      median time(~)     |     average time(~)     |
@@ -39,3 +55,6 @@ cd sorting-algorithms && cmake . && make
 +-------------+----------------+--------------+---------------------+---------------------+-------------------------+-------------------------+
 ```
 
+## License
+
+GPLv3, see COPYING file for details.
