@@ -1,16 +1,49 @@
+/*
+ * sorting_algorithms.hpp
+ *
+ * this file is a part of sorting algorithms project.
+ *
+ * Copyright (C) 2022 Oğuz Toraman <oguz.toraman@protonmail.com>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ *
+ */
+
 #ifndef SORTING_ALGORITHMS_HPP
 #define SORTING_ALGORITHMS_HPP
 
-#include <algorithm_base.hpp>
+#include <bitset>
+#include <vector>
+#include <chrono>
+#include <random>
+#include <limits>
+#include <fstream>
+#include <functional>
+
+#include <algorithm_concepts.hpp>
+#include <algorithm_comparison_table.hpp>
 
 namespace project {
 
-static constexpr std::size_t sorting_algorithm_count = 6;
-
 template <algorithm_value_type ValueType = int>
-class sorting_algorithms
-        : public algorithm_base<ValueType, sorting_algorithm_count> {
+class sorting_algorithms {
 public:
+    static constexpr std::size_t sorting_algorithm_count = 6;
+    static constexpr std::int64_t default_file_count = 5;
+    static constexpr std::int64_t default_test_count = 21;
+    static constexpr std::int64_t default_input_size = 5'000;
+
     enum algorithms {
         selection = 1L << 0,
         bubble 	  = 1L << 1,
@@ -22,40 +55,260 @@ public:
         all       = (1L << sorting_algorithm_count) - 1
     };
 
-    using base = algorithm_base<ValueType, sorting_algorithm_count>;
-
-    sorting_algorithms() = default;
+    sorting_algorithms()
+        : sorting_algorithms(default_input_size, default_test_count) { }
 
     template <algorithm_container Container>
     requires std::same_as<typename Container::value_type, ValueType>
-    sorting_algorithms(const Container& c,
-                       std::int64_t test_count = base::default_test_count)
-        : base::algorithm_base(c, test_count)          { }
+    sorting_algorithms(const Container& c, std::int64_t test_count = default_test_count)
+        : m_vec{begin(c), end(c)},
+        m_test_count{test_count},
+        m_input_size{std::ssize(m_vec)}
+    {
+        check_argumants(m_test_count, m_input_size);
+    }
 
     sorting_algorithms(std::int64_t input_size,
-                       std::int64_t test_count = base::default_test_count)
-        : base::algorithm_base{input_size, test_count} { }
+                       std::int64_t test_count = default_test_count)
+        : m_test_count{test_count},
+        m_input_size{input_size}
+    {
+        check_argumants(m_test_count, m_input_size);
+        m_vec.reserve(m_input_size);
+        generate_n(back_inserter(m_vec), m_input_size,
+            [](){ return sorting_algorithms::generate_random_numbers(); }
+        );
+    }
+
+    sorting_algorithms(const std::string& filename,
+                       std::int64_t test_count = default_test_count)
+        : m_test_count{test_count}
+    {
+        m_vec.reserve(default_input_size);
+        std::ifstream ifs{filename};
+        if (!ifs){
+            throw std::runtime_error{"failed to open " + filename};
+        }
+        ValueType input{};
+        while(ifs >> input){
+            m_vec.push_back(input);
+        }
+        m_vec.shrink_to_fit();
+        m_input_size = std::ssize(m_vec);
+        check_argumants(m_test_count, m_input_size);
+    }
+
+    [[nodiscard]]
+    std::int64_t get_test_count() const noexcept
+    {
+        return m_test_count;
+    }
+
+    [[nodiscard]]
+    std::int64_t get_input_size() const noexcept
+    {
+        return m_input_size;
+    }
+
+    [[nodiscard]]
+    const std::vector<ValueType>& get_inputs() const & noexcept
+    {
+        return m_vec;
+    }
+
+    [[nodiscard]]
+    std::vector<ValueType>& get_inputs() & noexcept
+    {
+        return m_vec;
+    }
+
+    [[nodiscard]]
+    std::vector<ValueType> get_inputs() &&
+    {
+        return m_vec;
+    }
+
+    template <algorithm_container Container>
+    requires std::same_as<typename Container::value_type, ValueType>
+        sorting_algorithms& operator=(const Container& c)
+    {
+        set(c);
+        return *this;
+    }
+
+    void set_test_count(std::int64_t test_count)
+    {
+        m_test_count = test_count;
+        check_argumants(m_test_count, m_input_size);
+    }
+
+    template <algorithm_container Container>
+    requires std::same_as<typename Container::value_type, ValueType>
+        void set(const Container& c, std::int64_t test_count = default_test_count)
+    {
+        m_test_count = test_count;
+        m_vec = std::move(std::vector<ValueType>{begin(c), end(c)});
+        m_input_size = std::ssize(m_vec);
+        check_argumants(m_test_count, m_input_size);
+    }
+
+    void set(std::int64_t input_size,
+             std::int64_t test_count = default_test_count)
+    {
+        check_argumants(test_count, input_size);
+        m_vec.clear();
+        m_vec.reserve(input_size);
+        m_input_size = input_size;
+        m_test_count = test_count;
+        generate_n(back_inserter(m_vec), m_input_size,
+            [](){ return sorting_algorithms::generate_random_numbers(); }
+        );
+    }
+
+    void set(const std::string& filename,
+             std::int64_t test_count = default_test_count)
+    {
+        m_vec.clear();
+        m_vec.reserve(default_input_size);
+        m_test_count = test_count;
+        std::ifstream ifs{filename};
+        if (!ifs){
+            throw std::runtime_error{"failed to open " + filename};
+        }
+        ValueType input{};
+        while(ifs >> input){
+            m_vec.push_back(input);
+        }
+        m_vec.shrink_to_fit();
+        m_input_size = std::ssize(m_vec);
+        check_argumants(m_test_count, m_input_size);
+    }
+
+    static void
+    generate_input_files(std::int64_t input_size = default_input_size,
+                         std::int64_t file_count = default_file_count,
+                         ValueType min = std::numeric_limits<ValueType>::min(),
+                         ValueType max = std::numeric_limits<ValueType>::max())
+    {
+        for (std::int64_t i{1}; i <= file_count; ++i){
+            std::ofstream ofs{"input" + std::to_string(i) + ".txt"};
+            if (!ofs){
+                throw std::runtime_error{
+                    "failed to create input" + std::to_string(i) + ".txt"
+                };
+            }
+            for (std::int64_t j{}; j < input_size; ++j){
+                ofs << sorting_algorithms::generate_random_numbers(min, max) << "\n";
+            }
+        }
+    }
+
+    [[nodiscard]] static ValueType
+    generate_random_numbers(ValueType min = std::numeric_limits<ValueType>::min(),
+                            ValueType max = std::numeric_limits<ValueType>::max())
+    {
+        static std::mt19937_64 eng{
+            static_cast<unsigned long>(
+                std::chrono::system_clock::now().time_since_epoch().count()
+            )
+        };
+        if constexpr (std::integral<ValueType>){
+            static std::uniform_int_distribution<ValueType> distribution{min, max};
+            return distribution(eng);
+        } else if constexpr (std::floating_point<ValueType>){
+            static std::uniform_real_distribution<ValueType> distribution{min, max};
+            return distribution(eng);
+        }
+    }
 
     [[nodiscard]] std::string
         compare(const std::bitset<sorting_algorithm_count>& algorithm_select
-                = algorithms::all) const
+                = algorithms::all)
     {
-        return base::compare_impl(algorithm_select, algorithm_names, functions);
+        m_comparison_table.add_title();
+        for (std::size_t i{}; i < sorting_algorithm_count; ++i){
+            if (algorithm_select[i]){
+                m_comparison_table.add_row(perform_test(m_algorithms[i]));
+            }
+        }
+        m_comparison_table.add_table_seperator_line();
+        return m_comparison_table.get_table();
     }
 
 private:
-    constexpr static const char* algorithm_names[] = {
-        "selection", "bubble", "quick", "merge", "insertion", "heap"
+    std::vector<ValueType> m_vec;
+    std::int64_t m_test_count{};
+    std::int64_t m_input_size{};
+    algorithm_comparison_table m_comparison_table{};
+
+    using table = algorithm_comparison_table;
+
+    using algorithm_signature_t = void(*)(
+        std::vector<ValueType>&,
+        const table::input_size_t&,
+        table::comparison_count_t&,
+        table::assignment_count_t&
+    );
+
+    using algorithm_pair_t = std::pair<
+        table::algorithm_name_t,
+        algorithm_signature_t
+    >;
+
+    std::array<algorithm_pair_t, sorting_algorithm_count> m_algorithms{
+        std::make_pair("selection", sorting_algorithms::selection_sort),
+        std::make_pair("buble", sorting_algorithms::bubble_sort),
+        std::make_pair("quick", sorting_algorithms::quick_sort),
+        std::make_pair("merge", sorting_algorithms::merge_sort),
+        std::make_pair("insertion", sorting_algorithms::insertion_sort),
+        std::make_pair("heap", sorting_algorithms::heap_sort)
     };
 
-    constexpr static typename sorting_algorithms::algorithmSignature* functions[]{
-        sorting_algorithms::selection_sort,
-        sorting_algorithms::bubble_sort,
-        sorting_algorithms::quick_sort,
-        sorting_algorithms::merge_sort,
-        sorting_algorithms::insertion_sort,
-        sorting_algorithms::heap_sort
-    };
+    static void check_argumants(std::int64_t test_count,
+                                std::int64_t input_size)
+    {
+        if (input_size <= 0){
+            throw std::runtime_error{
+                "input size cannot be zero or negative"
+            };
+        }
+        if (test_count <= 0){
+            throw std::runtime_error{
+                "test count cannot be zero or negative"
+            };
+        }
+    }
+
+    [[nodiscard]] table::test_results_t
+        perform_test(const algorithm_pair_t& algorithm) const
+    {
+        auto algorithm_function = std::get<algorithm_signature_t>(algorithm);
+        auto algorithm_name = std::get<table::algorithm_name_t>(algorithm);
+        static std::vector<std::int64_t> time_vec;
+        std::uint64_t comparison{}, assignment{};
+        time_vec.reserve(m_test_count);
+        for (std::int64_t i{}; i < m_test_count; ++i){
+            std::vector<ValueType> temp(begin(m_vec), end(m_vec));
+            auto start = std::chrono::steady_clock::now();
+            std::invoke(algorithm_function, temp, m_input_size, comparison, assignment);
+            auto end = std::chrono::steady_clock::now();
+            table::us_t time_interval{
+                std::chrono::duration_cast<table::us_t>(end - start)
+            };
+            time_vec.push_back(time_interval.count());
+        }
+        sort(begin(time_vec), end(time_vec));
+        table::us_t median_us{time_vec[m_test_count / 2]};
+        table::us_t average_us{static_cast<std::int64_t>(
+            accumulate(begin(time_vec), end(time_vec), 0.)/m_test_count
+        )};
+        time_vec.clear();
+        comparison /= m_test_count, assignment /= m_test_count;
+        return std::make_tuple(
+            algorithm_name, m_input_size, m_test_count,
+            comparison, assignment, median_us, average_us
+        );
+    }
 
     static void
         selection_sort(std::vector<ValueType>& vec, const std::int64_t& size,
@@ -249,6 +502,6 @@ private:
     }
 };
 
-} //namespace project
+} /* namespace project */
 
-#endif // SORTING_ALGORITHMS_HPP
+#endif /* SORTING_ALGORITHMS_HPP */
