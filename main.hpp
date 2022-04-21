@@ -1,3 +1,25 @@
+/*
+ * main.hpp
+ *
+ * this file is a part of sorting algorithms project.
+ *
+ * Copyright (C) 2022 Oğuz Toraman <oguz.toraman@protonmail.com>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ *
+ */
+
 #ifndef MAIN_HPP
 #define MAIN_HPP
 
@@ -92,7 +114,7 @@ inline void
             );
             std::cout << "generated " << file_number_or_test_number
                       << " files, each containing "
-                      << project::sorting_algorithms<T>::readable(default_input_size)
+                      << project::algorithm_comparison_table::readable(default_input_size)
                       << " random inputs\n";
         } else {
             throw std::runtime_error{help_message};
@@ -129,7 +151,7 @@ inline void
             );
             std::cout << "generated " << file_number_or_test_number
                       << " files, each containing "
-                      << project::sorting_algorithms<T>::readable(std::stoll(input_size))
+                      << project::algorithm_comparison_table::readable(std::stoll(input_size))
                       << " random inputs\n";
         } else {
             throw std::runtime_error{help_message};
