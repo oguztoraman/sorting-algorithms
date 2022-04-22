@@ -22,8 +22,6 @@
 
 #include <main.hpp>
 
-using namespace project;
-
 int main(int argc, char *argv[])
 {
     try {
