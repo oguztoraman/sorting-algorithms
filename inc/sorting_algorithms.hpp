@@ -3,7 +3,7 @@
  *
  * this file is a part of sorting algorithms project.
  *
- * Copyright (C) 2022 Oğuz Toraman <oguz.toraman@protonmail.com>
+ * Copyright (C) 2022-2023 Oğuz Toraman <oguz.toraman@protonmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
