@@ -7,11 +7,12 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_COMPILER g++)
 
 find_package(fmt)
+find_package(Boost COMPONENTS program_options REQUIRED)
 
 add_compile_options(-Wall -Werror)
 
-include_directories("${PROJECT_SOURCE_DIR}/inc" "${PROJECT_SOURCE_DIR}")
+include_directories("${PROJECT_SOURCE_DIR}/inc" "${PROJECT_SOURCE_DIR}" ${Boost_INCLUDE_DIR})
 
 add_executable(sorting-algorithms main.cpp)
 
-target_link_libraries(sorting-algorithms fmt::fmt)
+target_link_libraries(sorting-algorithms fmt::fmt ${Boost_LIBRARIES})

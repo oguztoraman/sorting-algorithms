@@ -26,6 +26,8 @@
 #include <tuple>
 #include <chrono>
 #include <iosfwd>
+#include <concepts>
+
 #include <fmt/core.h>
 
 namespace project {
@@ -110,11 +112,30 @@ public:
         );
     }
 
+    template <typename T>
     [[nodiscard]]
-    static std::string readable(std::int64_t number)
+    static std::string readable(const T& number)
     {
-        auto str{std::to_string(number)};
-        std::int64_t counter{};
+        std::string str;
+        if constexpr (std::same_as<T, std::string>){
+            str = number;
+        } else if constexpr (std::same_as<T, std::chrono::microseconds>){
+            using namespace std::chrono;
+            T us = number;
+            milliseconds ms{duration_cast<milliseconds>(us % 1s)};
+            seconds s{duration_cast<seconds>(us % 1min)};
+            minutes min{duration_cast<minutes>(us)};
+            us %= 1ms;
+            return (
+                fmt::format("{1:{0}}{2}", minutes_width, min.count(), "m ") +
+                fmt::format("{1:{0}}{2}", seconds_width, s.count(), "s ") +
+                fmt::format("{1:{0}}{2}", milliseconds_width, ms.count(), "ms ") +
+                fmt::format("{1:{0}}{2}", microseconds_width, us.count(), "us")
+            );
+        } else {
+            str = std::to_string(number);
+        }
+        std::uint64_t counter{};
         for (auto i{std::ssize(str)}; i >= 0; --i, ++counter){
             if (counter % 3 == 0 && counter > 0 && i != 0){
                 str.insert(i, "'");
@@ -208,22 +229,6 @@ private:
     void add_row_seperator_line()
     {
         m_table += horizontal_line(column_seperator);
-    }
-
-    [[nodiscard]]
-    static std::string readable(std::chrono::microseconds us)
-    {
-        using namespace std::chrono;
-        milliseconds ms{duration_cast<milliseconds>(us % 1s)};
-        seconds s{duration_cast<seconds>(us % 1min)};
-        minutes min{duration_cast<minutes>(us)};
-        us %= 1ms;
-        return (
-            fmt::format("{1:{0}}{2}", minutes_width, min.count(), "m ") +
-            fmt::format("{1:{0}}{2}", seconds_width, s.count(), "s ") +
-            fmt::format("{1:{0}}{2}", milliseconds_width, ms.count(), "ms ") +
-            fmt::format("{1:{0}}{2}", microseconds_width, us.count(), "us")
-        );
     }
 };
 

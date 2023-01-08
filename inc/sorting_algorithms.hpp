@@ -40,7 +40,7 @@ template <algorithm_value_type ValueType = int>
 class sorting_algorithms {
 public:
     static constexpr std::size_t sorting_algorithm_count = 6;
-    static constexpr std::int64_t default_file_count = 5;
+    static constexpr std::int64_t default_output_file_count = 5;
     static constexpr std::int64_t default_test_count = 21;
     static constexpr std::int64_t default_input_size = 5'000;
 
@@ -80,17 +80,17 @@ public:
         );
     }
 
-    sorting_algorithms(const std::string& filename,
+    sorting_algorithms(const std::string& file_name,
                        std::int64_t test_count = default_test_count)
         : m_test_count{test_count}
     {
         m_vec.reserve(default_input_size);
-        std::ifstream ifs{filename};
-        if (!ifs){
-            throw std::runtime_error{"failed to open " + filename};
+        std::ifstream file{file_name};
+        if (!file){
+            throw std::runtime_error{"failed to open " + file_name};
         }
         ValueType input{};
-        while(ifs >> input){
+        while(file >> input){
             m_vec.push_back(input);
         }
         m_vec.shrink_to_fit();
@@ -165,18 +165,18 @@ public:
         );
     }
 
-    void set(const std::string& filename,
+    void set(const std::string& file_name,
              std::int64_t test_count = default_test_count)
     {
         m_vec.clear();
         m_vec.reserve(default_input_size);
         m_test_count = test_count;
-        std::ifstream ifs{filename};
-        if (!ifs){
-            throw std::runtime_error{"failed to open " + filename};
+        std::ifstream file{file_name};
+        if (!file){
+            throw std::runtime_error{"failed to open " + file_name};
         }
         ValueType input{};
-        while(ifs >> input){
+        while(file >> input){
             m_vec.push_back(input);
         }
         m_vec.shrink_to_fit();
@@ -186,19 +186,19 @@ public:
 
     static void
     generate_input_files(std::int64_t input_size = default_input_size,
-                         std::int64_t file_count = default_file_count,
+                         std::int64_t output_file_count = default_output_file_count,
                          ValueType min = std::numeric_limits<ValueType>::min(),
                          ValueType max = std::numeric_limits<ValueType>::max())
     {
-        for (std::int64_t i{1}; i <= file_count; ++i){
-            std::ofstream ofs{"input" + std::to_string(i) + ".txt"};
-            if (!ofs){
+        for (std::int64_t i{1}; i <= output_file_count; ++i){
+            std::ofstream file{"input" + std::to_string(i) + ".txt"};
+            if (!file){
                 throw std::runtime_error{
                     "failed to create input" + std::to_string(i) + ".txt"
                 };
             }
             for (std::int64_t j{}; j < input_size; ++j){
-                ofs << sorting_algorithms::generate_random_numbers(min, max) << "\n";
+                file << sorting_algorithms::generate_random_numbers(min, max) << "\n";
             }
         }
     }
@@ -264,17 +264,22 @@ private:
         std::make_pair("heap", sorting_algorithms::heap_sort)
     };
 
-    static void check_argumants(std::int64_t test_count,
-                                std::int64_t input_size)
+    void check_argumants(std::int64_t test_count, std::int64_t input_size) const
     {
         if (input_size <= 0){
+            throw std::runtime_error{"input size cannot be zero or negative"};
+        }
+        if (static_cast<std::size_t>(input_size) > m_vec.max_size()){
             throw std::runtime_error{
-                "input size cannot be zero or negative"
+                "input size cannot be greater than " + table::readable(m_vec.max_size())
             };
         }
         if (test_count <= 0){
+            throw std::runtime_error{"test count cannot be zero or negative"};
+        }
+        if (static_cast<std::size_t>(test_count) > m_vec.max_size()){
             throw std::runtime_error{
-                "test count cannot be zero or negative"
+                "test count cannot be greater than " + table::readable(m_vec.max_size())
             };
         }
     }
