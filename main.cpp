@@ -1,7 +1,7 @@
 /*
  * main.cpp
  *
- * this file is a part of sorting algorithms project.
+ * this file is a part of sorting algorithms.
  *
  * Copyright (C) 2022-2023 Oğuz Toraman <oguz.toraman@protonmail.com>
  *
@@ -26,7 +26,7 @@
 #include <boost/program_options.hpp>
 
 using T = int;
-using namespace project;
+using namespace algorithms;
 namespace po = boost::program_options;
 
 int main(int argc, char* argv[])

@@ -1,7 +1,7 @@
 /*
  * sorting_algorithms.hpp
  *
- * this file is a part of sorting algorithms project.
+ * this file is a part of sorting algorithms.
  *
  * Copyright (C) 2022-2023 Oğuz Toraman <oguz.toraman@protonmail.com>
  *
@@ -34,7 +34,7 @@
 #include <algorithm_concepts.hpp>
 #include <algorithm_comparison_table.hpp>
 
-namespace project {
+namespace algorithms {
 
 template <algorithm_value_type ValueType = int>
 class sorting_algorithms {
@@ -507,6 +507,6 @@ private:
     }
 };
 
-} /* namespace project */
+} /* namespace algorithms */
 
 #endif /* SORTING_ALGORITHMS_HPP */

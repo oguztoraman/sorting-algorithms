@@ -1,7 +1,7 @@
 /*
  * algorithm_concepts.hpp
  *
- * this file is a part of sorting algorithms project.
+ * this file is a part of sorting algorithms.
  *
  * Copyright (C) 2022-2023 Oğuz Toraman <oguz.toraman@protonmail.com>
  *
@@ -28,7 +28,7 @@ static_assert (__cplusplus >= 202002L, "c++20 required!");
 #include <iomanip>
 #include <concepts>
 
-namespace project {
+namespace algorithms {
 
 template <typename>
 struct is_char_helper
@@ -89,6 +89,6 @@ concept algorithm_container =
         algorithm_value_type<typename Container::value_type> &&
         std::input_iterator<typename Container::iterator>;
 
-} /* namespace project */
+} /* namespace algorithms */
 
 #endif /* ALGORITHM_CONCEPTS_HPP */

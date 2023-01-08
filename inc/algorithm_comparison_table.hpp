@@ -1,7 +1,7 @@
 /*
  * algorithm_comparison_table.hpp
  *
- * this file is a part of sorting algorithms project.
+ * this file is a part of sorting algorithms.
  *
  * Copyright (C) 2022-2023 Oğuz Toraman <oguz.toraman@protonmail.com>
  *
@@ -30,7 +30,7 @@
 
 #include <fmt/core.h>
 
-namespace project {
+namespace algorithms {
 class algorithm_comparison_table {
 public:
     using us_t = std::chrono::microseconds;
@@ -232,6 +232,6 @@ private:
     }
 };
 
-} /* namespace project */
+} /* namespace algorithms */
 
 #endif /* ALGORITHM_COMPARISON_TABLE_HPP */
