@@ -51,15 +51,14 @@ Usage: sorting-algorithms [OPTION]...:
   --generate arg           the number of files each containing randomly 
                            generated inputs
 
-sorting-algorithms v1.0.0
+sorting-algorithms v1.0.1
 https://github.com/oguztoraman/sorting-algorithms
 
-Copyright (C) 2022-2023 Oğuz Toraman <oguz.toraman@protonmail.com>.
-License GPLv3+: GNU GPL version 3 or later <https://gnu.org/licenses/gpl.html>.
-This is free software: you are free to change and redistribute it.
-There is NO WARRANTY, to the extent permitted by law.
+Copyright Oğuz Toraman 2022-2023.
+Distributed under the Boost Software License, Version 1.0.
+(See accompanying file LICENSE_1_0.txt or copy at https://www.boost.org/LICENSE_1_0.txt)
 
-Written by Oğuz Toraman.
+Written by Oğuz Toraman, oguz.toraman@protonmail.com
 ```
 ---
 ```
@@ -110,17 +109,16 @@ sorting algorithms are comparing for 1'000 inputs, each sorting is performing 5 
 ---
 ```
 ./sorting-algorithms -v
-sorting-algorithms v1.0.0
+sorting-algorithms v1.0.1
 https://github.com/oguztoraman/sorting-algorithms
 
-Copyright (C) 2022-2023 Oğuz Toraman <oguz.toraman@protonmail.com>.
-License GPLv3+: GNU GPL version 3 or later <https://gnu.org/licenses/gpl.html>.
-This is free software: you are free to change and redistribute it.
-There is NO WARRANTY, to the extent permitted by law.
+Copyright Oğuz Toraman 2022-2023.
+Distributed under the Boost Software License, Version 1.0.
+(See accompanying file LICENSE_1_0.txt or copy at https://www.boost.org/LICENSE_1_0.txt)
 
-Written by Oğuz Toraman.
+Written by Oğuz Toraman, oguz.toraman@protonmail.com
 ```
 
 ## License
 
-GPLv3, see COPYING file for details.
+Boost Software License - Version 1.0, see [LICENSE_1_0.txt](https://github.com/oguztoraman/sorting-algorithms/blob/main/LICENSE_1_0.txt) file for details.
