@@ -213,17 +213,10 @@ public:
                 = algorithms::all)
     {
         m_comparison_table.add_title();
-        auto thread_function = [this](const algorithm_pair_t& algorithm){
-            m_comparison_table.add_row(perform_test(algorithm));
-        };
-        std::vector<std::thread> perform_test_threads;
         for (std::size_t i{}; i < sorting_algorithm_count; ++i){
             if (algorithm_select[i]){
-                perform_test_threads.push_back(std::thread{thread_function, m_algorithms[i]});
+                m_comparison_table.add_row(perform_test(m_algorithms[i]));
             }
-        }
-        for (auto& t : perform_test_threads){
-            t.join();
         }
         m_comparison_table.add_table_seperator_line();
         return m_comparison_table.get_table();
