@@ -13,6 +13,7 @@
 #include <tuple>
 #include <chrono>
 #include <iosfwd>
+#include <thread>
 #include <concepts>
 
 #include <fmt/core.h>
@@ -44,6 +45,7 @@ public:
     void add_title()
     {
         add_table_seperator_line();
+        std::lock_guard guard{m_table_mutex};
         m_table += (
             column_seperator +
             column("algorithm", algorithm_name_width, format::center) +
@@ -65,11 +67,13 @@ public:
 
     void add_table_seperator_line()
     {
+        std::lock_guard guard{m_table_mutex};
         m_table += horizontal_line(table_seperator);
     }
 
     void add_row(const test_results_t& results)
     {
+        std::lock_guard guard{m_table_mutex};
         const auto& [
             algorithm_name,
             input_size,
@@ -157,6 +161,7 @@ public:
 
 private:
     std::string m_table{};
+    std::mutex m_table_mutex;
 
     static constexpr char line_element     = '-';
     static constexpr char table_seperator  = '+';
