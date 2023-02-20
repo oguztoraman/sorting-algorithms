@@ -218,7 +218,7 @@ public:
                 m_comparison_table.add_row(perform_test(m_algorithms[i]));
             }
         }
-        m_comparison_table.add_table_seperator_line();
+        m_comparison_table.add_table_separator_line();
         return m_comparison_table.get_table();
     }
 

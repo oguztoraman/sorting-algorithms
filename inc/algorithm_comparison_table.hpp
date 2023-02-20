@@ -43,29 +43,29 @@ public:
 
     void add_title()
     {
-        add_table_seperator_line();
+        add_table_separator_line();
         m_table += (
-            column_seperator +
+            column_separator +
             column("algorithm", algorithm_name_width, format::center) +
-            column_seperator +
+            column_separator +
             column("input size", input_size_width, format::center) +
-            column_seperator +
+            column_separator +
             column("# of tests", test_count_width, format::center) +
-            column_seperator +
+            column_separator +
             column("# of comparisons", comparison_width, format::center) +
-            column_seperator +
+            column_separator +
             column("# of assignments", assignment_width, format::center) +
-            column_seperator +
+            column_separator +
             column("median time(~)", median_time_width, format::center) +
-            column_seperator +
+            column_separator +
             column("average time(~)", avg_time_width, format::center) +
-            column_seperator + "\n"
+            column_separator + "\n"
         );
     }
 
-    void add_table_seperator_line()
+    void add_table_separator_line()
     {
-        m_table += horizontal_line(table_seperator);
+        m_table += horizontal_line(table_separator);
     }
 
     void add_row(const test_results_t& results)
@@ -79,23 +79,23 @@ public:
             median_time,
             avg_time
         ] = results;
-        add_row_seperator_line();
+        add_row_separator_line();
         m_table += (
-            column_seperator +
+            column_separator +
             column(algorithm_name, algorithm_name_width, format::center) +
-            column_seperator +
+            column_separator +
             column(readable(input_size), input_size_width, format::right) +
-            column_seperator +
+            column_separator +
             column(readable(test_count), test_count_width, format::right) +
-            column_seperator +
+            column_separator +
             column(readable(comparison), comparison_width, format::right) +
-            column_seperator +
+            column_separator +
             column(readable(assignment), assignment_width, format::right) +
-            column_seperator +
+            column_separator +
             column(readable(median_time), median_time_width, format::center) +
-            column_seperator +
+            column_separator +
             column(readable(avg_time), avg_time_width, format::center) +
-            column_seperator + "\n"
+            column_separator + "\n"
         );
     }
 
@@ -159,8 +159,8 @@ private:
     std::string m_table{};
 
     static constexpr char line_element     = '-';
-    static constexpr char table_seperator  = '+';
-    static constexpr char column_seperator = '|';
+    static constexpr char table_separator  = '+';
+    static constexpr char column_separator = '|';
 
     static constexpr int algorithm_name_width = 13;
     static constexpr int input_size_width     = 16;
@@ -199,23 +199,23 @@ private:
     }
 
     [[nodiscard]]
-    static std::string horizontal_line(char seperator)
+    static std::string horizontal_line(char separator)
     {
         return (
-            seperator + std::string(algorithm_name_width, line_element) +
-            seperator + std::string(input_size_width, line_element) +
-            seperator + std::string(test_count_width, line_element) +
-            seperator + std::string(comparison_width, line_element) +
-            seperator + std::string(assignment_width, line_element) +
-            seperator + std::string(median_time_width, line_element) +
-            seperator + std::string(avg_time_width, line_element) +
-            seperator + "\n"
+            separator + std::string(algorithm_name_width, line_element) +
+            separator + std::string(input_size_width, line_element) +
+            separator + std::string(test_count_width, line_element) +
+            separator + std::string(comparison_width, line_element) +
+            separator + std::string(assignment_width, line_element) +
+            separator + std::string(median_time_width, line_element) +
+            separator + std::string(avg_time_width, line_element) +
+            separator + "\n"
         );
     }
 
-    void add_row_seperator_line()
+    void add_row_separator_line()
     {
-        m_table += horizontal_line(column_seperator);
+        m_table += horizontal_line(column_separator);
     }
 };
 
