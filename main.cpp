@@ -1,11 +1,5 @@
-//
-// main.cpp
-// ~~~~~~~~~~~~~~~
-//
-//          Copyright Oğuz Toraman 2022-2023.
-// Distributed under the Boost Software License, Version 1.0.
-//    (See accompanying file LICENSE_1_0.txt or copy at
-//          https://www.boost.org/LICENSE_1_0.txt)
+/* SPDX-FileCopyrightText: Copyright (c) 2022-2024 Oğuz Toraman <oguz.toraman@tutanota.com> */
+/* SPDX-License-Identifier: BSL-1.0 */
 
 #include <cstdlib>
 #include <iostream>
@@ -29,11 +23,11 @@ int main(int argc, char* argv[])
         std::string_view version{"sorting-algorithms v1.0.1"};
         std::string_view url{"https://github.com/oguztoraman/sorting-algorithms"};
         std::string_view license{
-            "Copyright Oğuz Toraman 2022-2023.\n"
+            "Copyright Oğuz Toraman 2022-2024.\n"
             "Distributed under the Boost Software License, Version 1.0.\n"
             "(See accompanying file LICENSE_1_0.txt or copy at https://www.boost.org/LICENSE_1_0.txt)"
         };
-        std::string_view author{"Written by Oğuz Toraman, oguz.toraman@protonmail.com"};
+        std::string_view author{"Written by Oğuz Toraman, oguz.toraman@tutanota.com"};
 
         sorting_algorithms<T> algorithms;
         std::string input_size, test_count, input_file;

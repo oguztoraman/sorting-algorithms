@@ -1,11 +1,5 @@
-//
-// algorithm_comparison_table.hpp
-// ~~~~~~~~~~~~~~~
-//
-//          Copyright Oğuz Toraman 2022-2023.
-// Distributed under the Boost Software License, Version 1.0.
-//    (See accompanying file LICENSE_1_0.txt or copy at
-//          https://www.boost.org/LICENSE_1_0.txt)
+/* SPDX-FileCopyrightText: Copyright (c) 2022-2024 Oğuz Toraman <oguz.toraman@tutanota.com> */
+/* SPDX-License-Identifier: BSL-1.0 */
 
 #ifndef ALGORITHM_COMPARISON_TABLE_HPP
 #define ALGORITHM_COMPARISON_TABLE_HPP
