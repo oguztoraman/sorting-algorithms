@@ -121,3 +121,6 @@ Written by Oğuz Toraman, oguz.toraman@tutanota.com
 ## License
 
 Boost Software License - Version 1.0, see [LICENSE_1_0.txt](https://github.com/oguztoraman/sorting-algorithms/blob/main/LICENSE_1_0.txt) file for details.
+
+### To Do
++ [ ] Update the CMakeLists.txt file.
