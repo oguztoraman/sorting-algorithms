@@ -7,7 +7,6 @@ A C++20 program to compare sorting algorithms with command line user interface.
 + git
 + g++ version >= 10
 + cmake version >= 3.14
-+ [{fmt}](https://fmt.dev/latest/index.html)
 + [boost program options](https://www.boost.org/)
 
 ## Installing Requirements
@@ -15,7 +14,7 @@ A C++20 program to compare sorting algorithms with command line user interface.
 > For Fedora
 
 ```
-sudo dnf install cmake make g++ git fmt-devel boost-program-options
+sudo dnf install cmake make g++ git boost-program-options
 ```
 
 

@@ -12,10 +12,7 @@
 
 #include <tuple>
 #include <chrono>
-#include <iosfwd>
-#include <concepts>
-
-#include <fmt/core.h>
+#include <string>
 
 namespace algorithms {
 class algorithm_comparison_table {
@@ -114,10 +111,10 @@ public:
             minutes min{duration_cast<minutes>(us)};
             us %= 1ms;
             return (
-                fmt::format("{1:{0}}{2}", minutes_width, min.count(), "m ") +
-                fmt::format("{1:{0}}{2}", seconds_width, s.count(), "s ") +
-                fmt::format("{1:{0}}{2}", milliseconds_width, ms.count(), "ms ") +
-                fmt::format("{1:{0}}{2}", microseconds_width, us.count(), "us")
+                std::format("{1:{0}}{2}", minutes_width, min.count(), "m ") +
+                std::format("{1:{0}}{2}", seconds_width, s.count(), "s ") +
+                std::format("{1:{0}}{2}", milliseconds_width, ms.count(), "ms ") +
+                std::format("{1:{0}}{2}", microseconds_width, us.count(), "us")
             );
         } else {
             str = std::to_string(number);
@@ -190,12 +187,12 @@ private:
             };
         }
         if (manip == format::left){
-            return fmt::format("{1:<{0}s}", width, (" " + str));
+            return std::format("{1:<{0}s}", width, (" " + str));
         }
         if (manip == format::right){
-            return fmt::format("{1:>{0}s}", width, (str + " "));
+            return std::format("{1:>{0}s}", width, (str + " "));
         }
-        return fmt::format("{1:^{0}s}", width, str);
+        return std::format("{1:^{0}s}", width, str);
     }
 
     [[nodiscard]]
