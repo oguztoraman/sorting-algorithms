@@ -111,7 +111,7 @@ sorting algorithms are comparing for 1'000 inputs, each sorting is performing 5 
 sorting-algorithms v1.0.1
 https://github.com/oguztoraman/sorting-algorithms
 
-Copyright Oğuz Toraman 2022-2024.
+Copyright Oğuz Toraman 2022-2025.
 Distributed under the Boost Software License, Version 1.0.
 (See accompanying file LICENSE_1_0.txt or copy at https://www.boost.org/LICENSE_1_0.txt)
 
